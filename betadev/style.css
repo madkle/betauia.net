@@ -1,0 +1,20 @@
+*{
+    margin: 0;
+    
+}
+.roundedCard{
+    border: 1px grey solid;
+    border-radius: 5px;
+    margin-top: 1em;
+    padding: 1em;
+    padding-top: 0.3em;
+}
+#markdown-content{
+    width: 90%;
+    margin: auto;
+}
+
+.roundedCard:first-child{
+    border: none;
+    margin-top: .1em;
+}

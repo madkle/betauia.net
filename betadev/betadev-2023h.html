@@ -5,21 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BetaDev høsten 2023</title>
     <script src="https://cdn.jsdelivr.net/npm/showdown@2.1.0/dist/showdown.min.js"></script>
+    <link rel="stylesheet" href="./style.css">
 </head>
 <body>
-    <div  id="markdown-content"  style='margin: auto;width:90%;' >
+    <div  id="markdown-content" >
         <!-- Markdown content will be rendered here -->
     </div>
     <script>
         // Convert Markdown to HTML using Showdown
+        const cleanupText = (brokenText, additionalText) =>{
+            return additionalText + brokenText;
+        }
         const converter = new showdown.Converter();
-
+        function generateContent(htmlContent) {
+            let contentArray = htmlContent.split("<h1");
+            appendedContet = [];
+            contentArray.map( (item) =>{
+                console.log(item.split(""));
+                let newDiv = document.createElement("div");
+                if (item.split("")[0] === " ") {
+                    item = cleanupText(item, "<h1");
+                    
+                }
+                newDiv.innerHTML = item;
+                newDiv.setAttribute("class","roundedCard")
+                appendedContet.push(newDiv);
+            });
+            return appendedContet;
+        }
         // Fetch the Markdown content from the file
         fetch('betadev-2023h.md')
             .then(response => response.text())
             .then(markdownContent => {
                 const htmlContent = converter.makeHtml(markdownContent);
-                document.getElementById('markdown-content').innerHTML = htmlContent;
+                const list = generateContent(htmlContent);
+                console.log(list);
+                list.map((item)=>{
+                    
+                document.getElementById('markdown-content').appendChild(item);
+                })
             })
             .catch(error => {
                 console.error('Error fetching Markdown content:', error);
